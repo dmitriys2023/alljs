@@ -1,9 +1,12 @@
 const path = require('path')
 const HTMLPlugin = require('html-webpack-plugin')
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
     entry: './src/index.js',
     output: {
+        filename: "[name].[contenthash].js",
         path: path.resolve(__dirname, 'dist'),
         clean: true
     },
@@ -13,6 +16,13 @@ module.exports = {
     plugins: [
         new HTMLPlugin({
             template: './src/index.html'
+        }),
+        new CopyWebpackPlugin({
+            patterns: [{
+                from:path.resolve(__dirname, "src/other/favicon.ico"),
+                to:path.resolve(__dirname, "dist")
+            }]
+
         })
     ],
     module: {
